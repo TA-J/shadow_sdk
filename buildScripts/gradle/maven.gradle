@@ -96,7 +96,7 @@ def sourceJar(String name, String path) {
     }
 }
 
-def publicationVersion = project.ARTIFACT_VERSION
+def publicationVersion = '1.0.2'
 def coreGroupId = 'com.tencent.shadow.core'
 def corePath = 'sdk/core'
 def dynamicGroupId = 'com.tencent.shadow.dynamic'
@@ -437,41 +437,41 @@ publishing {
         }
     }
     repositories {
-        def useLocalCredential = false
-        Properties properties = new Properties()
-        def propertiesFile = project.rootProject.file('local.properties')
-        if (propertiesFile.exists()) {
-            properties.load(propertiesFile.newDataInputStream())
-
-            if ("${properties.getProperty('gpr.local')}".equalsIgnoreCase('true')) {
-                def user = properties.getProperty('gpr.user')
-                def key = properties.getProperty('gpr.key')
+//        def useLocalCredential = false
+//        Properties properties = new Properties()
+//        def propertiesFile = project.rootProject.file('local.properties')
+//        if (propertiesFile.exists()) {
+//            properties.load(propertiesFile.newDataInputStream())
+//
+//            if ("${properties.getProperty('gpr.local')}".equalsIgnoreCase('true')) {
+//                def user = properties.getProperty('gpr.user')
+//                def key = properties.getProperty('gpr.key')
                 maven {
                     name = "GitHubPackages"
                     credentials {
-                        username = user
-                        password = key
+                        username = "TA-J"
+                        password = "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"
                     }
-                    url "https://maven.pkg.github.com/${user}/shadow_sdk"
+                    url "https://maven.pkg.github.com/TA-J/shadow_sdk"
                 }
+//
+//                useLocalCredential = true
+//            }
+//        }
 
-                useLocalCredential = true
-            }
-        }
-
-        if (!useLocalCredential && "${System.env.CI}".equalsIgnoreCase("true")) {
-            maven {
-                name = "GitHubPackages"
-                credentials {
-                    username = System.getenv("GITHUB_ACTOR")
-//                    password = System.getenv("GITHUB_TOKEN")
-                    password = "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"
-                }
-                url "https://maven.pkg.github.com/" + "${System.env.GITHUB_REPOSITORY}".toLowerCase()
-            }
-        } else {
-            mavenLocal()
-        }
+//        if (!useLocalCredential && "${System.env.CI}".equalsIgnoreCase("true")) {
+//            maven {
+//                name = "GitHubPackages"
+//                credentials {
+//                    username = System.getenv("GITHUB_ACTOR")
+////                    password = System.getenv("GITHUB_TOKEN")
+//                    password = "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"
+//                }
+//                url "https://maven.pkg.github.com/" + "${System.env.GITHUB_REPOSITORY}".toLowerCase()
+//            }
+//        } else {
+//            mavenLocal()
+//        }
     }
 }
 

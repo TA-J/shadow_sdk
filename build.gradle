@@ -36,7 +36,7 @@ allprojects {
             //https://github.community/t/download-from-github-package-registry-without-authentication/14407
             credentials {
                 username = 'TA-J'
-                password = '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'
+                password = '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'
             }
         }
         mavenLocal()
