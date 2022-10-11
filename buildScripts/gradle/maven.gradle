@@ -59,21 +59,21 @@ def gitShortRev() {
 }
 
 def setScm(scm) {
-    scm.appendNode('connection', "https://github.com/${System.getenv("GITHUB_ACTOR")}/shadow_sdk.git")
-    logger.error('error 日志111111111111111111111111')
-
-    def commit
-    if ("${System.env.CI}".equalsIgnoreCase("true")) {
-        commit = System.getenv("GITHUB_SHA")
-        logger.error('error 日志222222222222222222')
-//        commit = "b2c5aac9fba052dd104230fb8edbc58303d8dfc2"
-    } else {
-        logger.error('error 日志3333333333333333333')
-        commit = gitShortRev()
-    }
-    logger.error('error 日志'+commit)
-
-    scm.appendNode('url', "https://github.com/${System.getenv("GITHUB_ACTOR")}/shadow_sdk/commit/$commit")
+//    scm.appendNode('connection', "http://127.0.0.1:8081/repository/maven-snapshots/")
+//    logger.error('error 日志111111111111111111111111')
+//
+//    def commit
+////    if ("${System.env.CI}".equalsIgnoreCase("true")) {
+////        commit = System.getenv("GITHUB_SHA")
+////        logger.error('error 日志222222222222222222')
+//    commit = "b2c5aac9fba052dd104230fb8edbc58303d8dfc2"
+////    } else {
+////        logger.error('error 日志3333333333333333333')
+////        commit = gitShortRev()
+////    }
+////    logger.error('error 日志'+commit)
+//
+//    scm.appendNode('url', "http://127.0.0.1:8081/repository/maven-snapshots/")
 }
 
 def setGeneratePomFileAndDepends(publicationName) {
@@ -96,7 +96,7 @@ def sourceJar(String name, String path) {
     }
 }
 
-def publicationVersion = '1.0.2'
+def publicationVersion = '1.0.4'
 def coreGroupId = 'com.tencent.shadow.core'
 def corePath = 'sdk/core'
 def dynamicGroupId = 'com.tencent.shadow.dynamic'
@@ -446,14 +446,17 @@ publishing {
 //            if ("${properties.getProperty('gpr.local')}".equalsIgnoreCase('true')) {
 //                def user = properties.getProperty('gpr.user')
 //                def key = properties.getProperty('gpr.key')
-                maven {
-                    name = "GitHubPackages"
-                    credentials {
-                        username = "TA-J"
-                        password = "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"
-                    }
-                    url "https://maven.pkg.github.com/TA-J/shadow_sdk"
-                }
+
+        maven {
+            name = "shadow_sdk"
+            url "http://127.0.0.1:8081/repository/maven-releases/"
+            //一个只读账号兼容Github Packages暂时不支持匿名下载
+            //https://github.community/t/download-from-github-package-registry-without-authentication/14407
+            credentials {
+                username = 'admin'
+                password = 'a123456'
+            }
+        }
 //
 //                useLocalCredential = true
 //            }
@@ -465,7 +468,7 @@ publishing {
 //                credentials {
 //                    username = System.getenv("GITHUB_ACTOR")
 ////                    password = System.getenv("GITHUB_TOKEN")
-//                    password = "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"
+//                    password = "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"
 //                }
 //                url "https://maven.pkg.github.com/" + "${System.env.GITHUB_REPOSITORY}".toLowerCase()
 //            }
